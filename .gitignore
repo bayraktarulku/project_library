@@ -1,0 +1,8 @@
+*~
+*.sw?
+*.log
+*.pyc
+*.db
+*__pycache__/
+*.rdb
+*library/*
