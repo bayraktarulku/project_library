@@ -20,7 +20,6 @@ def create_user(data):
         username=data['username'], password=password,
         email=data['email'], confirmed_at=time, is_active=True,
         is_admin=data['is_admin'])
-    db_session.add(new_user)
 
     try:
          db_session.add(new_user)

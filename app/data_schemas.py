@@ -18,4 +18,18 @@ UPDATE_USER_SCHEMA = Schema({
 
 DELETE_USER_SCHEMA = Schema({
     'username': Use(str),
-    'password': Use(str),})
+    'password': Use(str), })
+
+BOOK_TYPE_SCHEMA = Schema({
+    'name': Use(str),
+})
+
+TYPE_SCHEMA = Schema({
+    'name': Use(str),
+})
+
+
+AUTHOR_SCHEMA = Schema({
+    'name': Use(str),
+    'surname': Use(str),
+})

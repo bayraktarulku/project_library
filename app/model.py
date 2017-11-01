@@ -2,11 +2,11 @@ from sqlalchemy import Column,  Integer, String, Boolean, DateTime, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session, relationship
 from sqlalchemy import create_engine
-# from config import SQLALCHEMY_DATABASE_URI
+from config import SQLALCHEMY_DATABASE_URI
 from sqlalchemy.pool import NullPool
 
-SQLALCHEMY_DATABASE_URI = (
-        'mysql+mysqlconnector://root:@localhost/ProjectLibrary')
+# SQLALCHEMY_DATABASE_URI = (
+# 'mysql+mysqlconnector://root:@localhost/ProjectLibrary')
 
 Base = declarative_base()
 
@@ -35,6 +35,7 @@ class User(Base):
                 'confirmed_at': str(self.confirmed_at),
                 'is_active': self.is_active}
 
+
 class Types(Base):
     __tablename__ = 'types'
 
@@ -47,6 +48,20 @@ class Types(Base):
                 'name': self.name}
 
 
+class Authors(Base):
+    __tablename__ = 'authors'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(64))
+    surname = Column(String(64))
+
+    def to_dict(self):
+
+        return {'id': self.id,
+                'name': self.name,
+                'surname': self.surname}
+
+
 class Books(Base):
     __tablename__ = 'books'
 
@@ -55,7 +70,9 @@ class Books(Base):
     types_id = Column(Integer, ForeignKey('types.id'))
     type = relationship('Types', backref='types',
                         cascade='delete-orphan, delete', single_parent=True)
-    book_author = Column(String(64))
+    author_id = Column(Integer, ForeignKey('authors.id'))
+    author = relationship('Authors', backref='authors',
+                          cascade='delete-orphan, delete', single_parent=True)
     book_translator = Column(String(64))
 
     @property
@@ -67,7 +84,7 @@ class Books(Base):
         return {'id': self.id,
                 'types_id': self.types_id,
                 'name': self.name,
-                'book_author': self.book_author,
+                'author_id': self.author_id,
                 'book_translator': self.book_translator,
                 'notes': [n.id for n in self.book_notes]}
 
@@ -85,13 +102,13 @@ class Notes(Base):
     user = relationship('User', backref='usernotes',
                         cascade='delete-orphan, delete', single_parent=True)
 
-    def to_dict(self):
+    # def to_dict(self):
 
-        return {'id': self.id,
-                'title': self.title,
-                'text': self.text,
-                'book_id': self.book_id,
-                'user': self.user_id}
+    #     return {'id': self.id,
+    #             'title': self.title,
+    #             'text': self.text,
+    #             'book_id': self.book_id,
+    #             'user': self.user_id}
 
 
 engine = create_engine(SQLALCHEMY_DATABASE_URI,
