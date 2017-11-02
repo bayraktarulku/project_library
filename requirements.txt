@@ -1,9 +1,7 @@
 flask
-flask-restful
-flask_session
-Flask-Login
-redis
-schema
-requests
+flask_restful
 sqlalchemy
-mysql-connector-python-rf
+schema
+pyserial
+psycopg2
+requests

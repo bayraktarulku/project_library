@@ -2,17 +2,14 @@ from sqlalchemy import Column,  Integer, String, Boolean, DateTime, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session, relationship
 from sqlalchemy import create_engine
-from config import SQLALCHEMY_DATABASE_URI
-from sqlalchemy.pool import NullPool
-
-# SQLALCHEMY_DATABASE_URI = (
-# 'mysql+mysqlconnector://root:@localhost/ProjectLibrary')
+# from config import SQLALCHEMY_DATABASE_URI
+SQLALCHEMY_DATABASE_URI = 'postgresql://projectlibrary:12345678@localhost/projectlibrary'
 
 Base = declarative_base()
 
 
-class User(Base):
-    __tablename__ = 'user'
+class Login(Base):
+    __tablename__ = 'login'
 
     id = Column(Integer, primary_key=True)
     username = Column(String(255), unique=True)
@@ -67,17 +64,17 @@ class Books(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(64))
-    types_id = Column(Integer, ForeignKey('types.id'))
-    type = relationship('Types', backref='types',
-                        cascade='delete-orphan, delete', single_parent=True)
+    type_id = Column(Integer, ForeignKey('types.id'))
+    type_ = relationship('Types', backref='types',
+                         cascade='delete-orphan, delete', single_parent=True)
     author_id = Column(Integer, ForeignKey('authors.id'))
     author = relationship('Authors', backref='authors',
                           cascade='delete-orphan, delete', single_parent=True)
     book_translator = Column(String(64))
 
-    @property
-    def book_notes(self):
-        return [note.note for note in self.booknotes]
+    # @property
+    # def book_notes(self):
+    #     return [note.note for note in self.booknotes]
 
     def to_dict(self):
 
@@ -97,9 +94,9 @@ class Notes(Base):
     book_id = Column(Integer, ForeignKey('books.id'))
     book = relationship('Books', backref='booknotes',
                         cascade='delete-orphan, delete', single_parent=True)
-    text = Column(String(max))
-    user_id = Column(Integer, ForeignKey('user.id'))
-    user = relationship('User', backref='usernotes',
+    text = Column(String(250))
+    user_id = Column(Integer, ForeignKey('login.id'))
+    user = relationship('Login', backref='usernotes',
                         cascade='delete-orphan, delete', single_parent=True)
 
     # def to_dict(self):
@@ -111,8 +108,7 @@ class Notes(Base):
     #             'user': self.user_id}
 
 
-engine = create_engine(SQLALCHEMY_DATABASE_URI,
-                       poolclass=NullPool)
+engine = create_engine(SQLALCHEMY_DATABASE_URI)
 DBSession = scoped_session(sessionmaker(bind=engine))
 Base.metadata.bind = engine
 Base.metadata.create_all(engine)

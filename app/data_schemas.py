@@ -33,3 +33,10 @@ AUTHOR_SCHEMA = Schema({
     'name': Use(str),
     'surname': Use(str),
 })
+
+BOOK_SCHEMA = Schema({
+    'name': Use(str),
+    'type_id': int,
+    'author_id': int,
+    'book_translator': Use(str),
+})

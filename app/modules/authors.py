@@ -1,5 +1,5 @@
 from app.model import DBSession, Authors
-from sqlalchemy import desc, and_
+from sqlalchemy import desc
 
 
 def create_author(data):
@@ -63,9 +63,10 @@ def get_author(author_id):
 def delete_outhor(author_id):
     if not (author_id):
         return {'status': 'error'}
-
+    print(type(author_id))
     db_session = DBSession()
-    db_session.query(Authors).filter(Authors.id == author_id).delete()
+    outhor = db_session.query(Authors).get(author_id)
+    db_session.delete(outhor)
     db_session.commit()
     db_session.close()
 

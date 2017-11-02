@@ -43,7 +43,7 @@ class AuthorResource(Resource):
                 'record': author_type}
 
     def delete(self):
-        author_id = request.args.get('id', None)
+        author_id = int(request.args.get('id', None))
         if not author_id:
             return {'status': 'error'}
 
