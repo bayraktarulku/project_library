@@ -5,3 +5,4 @@ schema
 pyserial
 psycopg2
 requests
+flask_admin
