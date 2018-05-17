@@ -4,24 +4,14 @@ from sqlalchemy import desc
 
 def create_author(data):
     db_session = DBSession()
-    # print(db_session.query(Authors).filter(
-    #     and_(Authors.name==data['name'], Authors.surname==data['surname'])).first())
-    # book_author = db_session.query(Authors).filter(
-    #     and_(Authors.name==data['name'], Authors.surname==data['surname'])).first()
-    # print('WWWWWWWWWWWWWWWWWWWWW')
-    # if book_author:
-    #     return {'status': 'error',
-    #             'message': 'message'}
-
-    new_author = Authors(name=data['name'], surname=data['surname'])
+    new_author = Authors(**data)
 
     try:
         db_session.add(new_author)
         db_session.commit()
 
         result = {'status': 'OK',
-                  'author_name': data['name'],
-                  'author_surname': data['surname']}
+                  'author': data['fullname']}
     except:
         db_session.rollback()
         result = {'status': 'error'}
@@ -36,8 +26,7 @@ def get_authors():
 
     for i in authors:
         yield {'id': i.id,
-               'name': i.name,
-               'surname': i.surname}
+               'fullname': i.fullname}
 
     db_session.close()
 

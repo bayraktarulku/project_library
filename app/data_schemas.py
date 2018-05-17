@@ -30,8 +30,7 @@ TYPE_SCHEMA = Schema({
 
 
 AUTHOR_SCHEMA = Schema({
-    'name': Use(str),
-    'surname': Use(str),
+    'fullname': Use(str),
 })
 
 BOOK_SCHEMA = Schema({

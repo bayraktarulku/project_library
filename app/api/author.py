@@ -30,6 +30,7 @@ class AuthorResource(Resource):
                 'records': list(record)}
 
     def post(self):
+        print(AUTHOR_SCHEMA.validate(request.json))
         try:
             data = AUTHOR_SCHEMA.validate(request.json)
         except SchemaError:

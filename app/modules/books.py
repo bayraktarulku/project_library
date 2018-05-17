@@ -16,11 +16,11 @@ def create_book(data):
                      book_translator=data['book_translator'])
 
     try:
-         db_session.add(new_book)
-         db_session.commit()
+        db_session.add(new_book)
+        db_session.commit()
 
-         result = {'status': 'OK',
-                   'book': data['name']}
+        result = {'status': 'OK',
+                  'book': data['name']}
     except:
         db_session.rollback()
         result = {'status': 'error'}
@@ -46,7 +46,7 @@ def get_book(book_id):
     else:
         db_session = DBSession()
 
-        book = db_session.query(Books).filter(Books.id==book_id).all()
+        book = db_session.query(Books).filter(Books.id == book_id).all()
 
         if not book:
             return {'message': 'book not found'}
@@ -55,6 +55,7 @@ def get_book(book_id):
         db_session.close()
 
         return {'book': book}
+
 
 def delete_book(book_id):
     if not (book_id):

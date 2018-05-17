@@ -23,17 +23,15 @@ class TypesViewTemplate(ModelView):
 
 
 class AuthorsViewTemplate(ModelView):
-    column_list = ['id', 'name', 'surname']
-    column_searchable_list = ['id', 'name', 'surname']
+    column_list = ['id', 'fullname']
+    column_searchable_list = ['id', 'fullname']
 
 
 class BooksViewTemplate(ModelView):
-    column_list = ['id', 'author.name',
-                   'author.surname', 'type.name', 'book_translator']
-    column_labels = {'author.name': 'Author Name',
-                     'author.surname': 'Author Surname', 'type.name': 'Type'}
+    column_list = ['id', 'author.fullname', 'type.name', 'book_translator']
+    column_labels = {'author.fullname': 'Author', 'type.name': 'Type'}
     column_searchable_list = ['id', 'type.name',
-                              'author.name', 'book_translator']
+                              'author.fullname', 'book_translator']
 
 
 class NotesViewTemplate(ModelView):

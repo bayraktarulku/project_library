@@ -49,14 +49,12 @@ class Authors(Base):
     __tablename__ = 'authors'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String(64))
-    surname = Column(String(64))
+    fullname = Column(String(64))
 
     def to_dict(self):
 
         return {'id': self.id,
-                'name': self.name,
-                'surname': self.surname}
+                'fullname': self.fullname}
 
 
 class Books(Base):
@@ -71,10 +69,6 @@ class Books(Base):
     author = relationship('Authors', backref='authors',
                           cascade='delete-orphan, delete', single_parent=True)
     book_translator = Column(String(64))
-
-    # @property
-    # def book_notes(self):
-    #     return [note.note for note in self.booknotes]
 
     def to_dict(self):
 
