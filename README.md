@@ -65,7 +65,7 @@ DELETE /api/type?id=1
 
 ### Test Script
 ```text
-Python Script that test all api
+  ### test_script ###
 ```
 
 ![test_script]( ### ADDED TEST SCRIPT ###)
