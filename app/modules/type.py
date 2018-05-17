@@ -14,11 +14,11 @@ def create_type(data):
     new_type = Types(name=data['name'])
 
     try:
-         db_session.add(new_type)
-         db_session.commit()
+        db_session.add(new_type)
+        db_session.commit()
 
-         result = {'status': 'OK',
-                   'type': data['name']}
+        result = {'status': 'OK',
+                  'type': data['name']}
     except:
         db_session.rollback()
         result = {'status': 'error'}
@@ -44,7 +44,7 @@ def get_type(type_id):
     else:
         db_session = DBSession()
 
-        book_type = db_session.query(Types).filter(Types.id==type_id).all()
+        book_type = db_session.query(Types).filter(Types.id == type_id).all()
 
         if not book_type:
             return {'message': 'type not found'}
@@ -54,12 +54,13 @@ def get_type(type_id):
 
         return {'type': book_type}
 
+
 def delete_type(type_id):
     if not (type_id):
         return {'status': 'error'}
 
     db_session = DBSession()
-    db_session.query(Types).filter(Types.id==type_id).delete()
+    db_session.query(Types).filter(Types.id == type_id).delete()
     db_session.commit()
     db_session.close()
 

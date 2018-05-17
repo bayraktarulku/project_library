@@ -8,8 +8,8 @@ SQLALCHEMY_DATABASE_URI = 'postgresql://projectlibrary:12345678@localhost/projec
 Base = declarative_base()
 
 
-class Login(Base):
-    __tablename__ = 'login'
+class User(Base):
+    __tablename__ = 'user'
 
     id = Column(Integer, primary_key=True)
     username = Column(String(255), unique=True)
@@ -65,8 +65,8 @@ class Books(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(64))
     type_id = Column(Integer, ForeignKey('types.id'))
-    type_ = relationship('Types', backref='types',
-                         cascade='delete-orphan, delete', single_parent=True)
+    type = relationship('Types', backref='types',
+                        cascade='delete-orphan, delete', single_parent=True)
     author_id = Column(Integer, ForeignKey('authors.id'))
     author = relationship('Authors', backref='authors',
                           cascade='delete-orphan, delete', single_parent=True)
@@ -95,8 +95,8 @@ class Notes(Base):
     book = relationship('Books', backref='booknotes',
                         cascade='delete-orphan, delete', single_parent=True)
     text = Column(String(250))
-    user_id = Column(Integer, ForeignKey('login.id'))
-    user = relationship('Login', backref='usernotes',
+    user_id = Column(Integer, ForeignKey('user.id'))
+    user = relationship('User', backref='usernotes',
                         cascade='delete-orphan, delete', single_parent=True)
 
     # def to_dict(self):

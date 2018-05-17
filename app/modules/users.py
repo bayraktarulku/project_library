@@ -1,4 +1,4 @@
-from app.model import DBSession, Login
+from app.model import DBSession, User
 from datetime import datetime
 # from pprint import pprint
 from hashlib import sha512
@@ -10,23 +10,23 @@ def create_user(data):
 
     db_session = DBSession()
     print(data)
-    user = db_session.query(Login).filter(
-        Login.email == data['email']).first()
+    user = db_session.query(User).filter(
+        User.email == data['email']).first()
     if user:
         return {'status': 'error',
                 'message': 'message'}
     password = sha512(data['password'].encode('utf-8')).hexdigest()
-    new_user = Login(
+    new_user = User(
         username=data['username'], password=password,
         email=data['email'], confirmed_at=time, is_active=True,
         is_admin=data['is_admin'])
 
     try:
-         db_session.add(new_user)
-         db_session.commit()
+        db_session.add(new_user)
+        db_session.commit()
 
-         result = {'status': 'OK',
-                   'user': data['username']}
+        result = {'status': 'OK',
+                  'user': data['username']}
     except:
         db_session.rollback()
         result = {'status': 'error'}
@@ -40,7 +40,7 @@ def update_user(user_id, data):
                                               'new_password', 'email']}
     db_session = DBSession()
 
-    user = db_session.query(Login).get(user_id)
+    user = db_session.query(User).get(user_id)
     password = sha512(data['password'].encode('utf-8')).hexdigest()
     if (not user or user.password != password):
         return {'status': 'error'}
@@ -65,7 +65,7 @@ def update_user(user_id, data):
 
 def get_users():
     db_session = DBSession()
-    users = db_session.query(Login).order_by(desc(Login.id)).all()
+    users = db_session.query(User).order_by(desc(User.id)).all()
 
     for i in users:
         yield {'id': i.id,
@@ -83,7 +83,7 @@ def get_user(user_id):
     else:
         db_session = DBSession()
 
-        user = db_session.query(Login).filter(Login.id==user_id).all()
+        user = db_session.query(User).filter(User.id == user_id).all()
         if not user:
             return {'message': 'user not found'}
 
@@ -98,12 +98,12 @@ def delete_user(user_id, data):
         return{'status': 'error'}
 
     db_session = DBSession()
-    user = db_session.query(Login).get(user_id)
+    user = db_session.query(User).get(user_id)
     password = sha512(data['password'].encode('utf-8')).hexdigest()
     if (not user or data['username'] != user.username or
             password != user.password):
         return{'status': 'error'}
-    db_session.query(Login).filter(Login.id == user_id).delete()
+    db_session.query(User).filter(User.id == user_id).delete()
     db_session.commit()
     db_session.close()
 
