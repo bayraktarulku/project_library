@@ -5,12 +5,6 @@ from sqlalchemy import desc
 def create_book(data):
     db_session = DBSession()
 
-    # book_type = db_session.query(Books).filter(
-    #     Books.name == data['name'], Books.author.name==data['author']).first()
-    # if book_type:
-    #     return {'status': 'error',
-    #             'message': 'message'}
-
     new_book = Books(name=data['name'], type_id=data['type_id'],
                      author_id=data['author_id'],
                      book_translator=data['book_translator'])

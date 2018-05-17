@@ -28,9 +28,9 @@ class AuthorsViewTemplate(ModelView):
 
 
 class BooksViewTemplate(ModelView):
-    column_list = ['id', 'author.fullname', 'type.name', 'book_translator']
+    column_list = ['id', 'name', 'author.fullname', 'type.name', 'book_translator']
     column_labels = {'author.fullname': 'Author', 'type.name': 'Type'}
-    column_searchable_list = ['id', 'type.name',
+    column_searchable_list = ['id', 'name', 'type.name',
                               'author.fullname', 'book_translator']
 
 

@@ -30,13 +30,6 @@ class BookResource(Resource):
 
     def post(self):
         data = BOOK_SCHEMA.validate(request.json)
-        # try:
-        # except SchemaError:
-        #     return {'status': 'error'}
-        # for key in data:
-        #     if data[key] == '':
-        #         return{'status': 'error'}
-
         book = create_book(data)
         return {'status': book['status'],
                 'record': book}
@@ -50,7 +43,6 @@ class BookResource(Resource):
 
         return {'status': 'OK',
                 'type': book}
-
 
 
 api.add_resource(BookResource, '/api/book')
