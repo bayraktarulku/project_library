@@ -42,17 +42,12 @@ class NotesViewTemplate(ModelView):
                               'book.name', 'text', 'user.username']
 
 UserView = UserViewTemplate(User, admin_session,
-                            name='Users',
-                            category='User Menu')
+                            name='Users')
 TypesView = TypesViewTemplate(Types, admin_session,
-                              name='Types',
-                              category='Type Menu')
+                              name='Types')
 AuthorsView = AuthorsViewTemplate(Authors, admin_session,
-                                  name='Authors',
-                                  category='Authors Menu')
+                                  name='Authors')
 BooksView = BooksViewTemplate(Books, admin_session,
-                              name='Books',
-                              category='Books Menu')
+                              name='Books')
 NotesView = NotesViewTemplate(Notes, admin_session,
-                              name='Notes',
-                              category='Notes Menu')
+                              name='Notes')
